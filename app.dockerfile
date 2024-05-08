@@ -12,7 +12,7 @@ RUN go mod download && go mod verify
 # 実行ファイルの作成
 # -o はアウトプットの名前を指定。
 # ビルドするファイル名を指定（今回は main.go）。
-RUN go build -o main main.go
+RUN go build -o main /app/main.go
 
 
 ####################### Run stage #######################
@@ -30,4 +30,4 @@ COPY .env .
 # 今回、docker-compose.yml において、api コンテナは 8080 ポートを解放するため「8080」とする。
 EXPOSE 8080
 # バイナリファイルの実行
-CMD [ "./main" ]
+CMD [ "/app/main" ]
