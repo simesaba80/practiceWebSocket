@@ -3,34 +3,26 @@ services:
     container_name: app
     build:
       context: .
-      dockerfile: app.dockerfile
+      dockerfile: app1.dockerfile
     tty: true
     ports:
       - 8080:8080
     depends_on:
       - db
-
+    volumes:
+      - .:/app
 
   db:
     container_name: db
-    build:
+    build: 
       context: .
       dockerfile: db.dockerfile
-    tty: true
     ports:
       - 5432:5432
-    environment:
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: "test"
-      POSTGRES_USER: "postgres"
     volumes:
-      - type: volume
-        source: postgres_data
-        target: /var/lib/postgresql/data
-    networks:
-      - default
-
-networks:
-  default:
+      - db-store:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'postgres'
 volumes:
-  postgres_data:
+  db-store:

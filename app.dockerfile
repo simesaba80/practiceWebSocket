@@ -12,7 +12,7 @@ RUN go mod download && go mod verify
 # 実行ファイルの作成
 # -o はアウトプットの名前を指定。
 # ビルドするファイル名を指定（今回は main.go）。
-RUN go build -o main main.go
+RUN go build -o /bin/main main.go
 
 
 ####################### Run stage #######################
@@ -22,7 +22,7 @@ FROM alpine:latest
 # 作業ディレクトリの定義
 WORKDIR /app
 # Build stage からビルドされた main だけを Run stage にコピーする。（重要）
-COPY --from=builder /app/main /app
+COPY --from=builder /bin/main /bin/main
 # ローカルの .env をコンテナ側の app フォルダにコピーする
 COPY .env .
 # EXPOSE 命令は、実際にポートを公開するわけではない。
@@ -30,4 +30,4 @@ COPY .env .
 # 今回、docker-compose.yml において、api コンテナは 8080 ポートを解放するため「8080」とする。
 EXPOSE 8080
 # バイナリファイルの実行
-CMD [ "./main" ]
+CMD [ "/bin/main" ]
