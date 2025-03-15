@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"log"
+	"websocket/utils"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -23,7 +24,7 @@ type User struct {
 
 func Connect() {
 		// Open a PostgreSQL database.
-		dsn := "postgres://user:postgres@db/postgres?sslmode=disable"
+		dsn := utils.DBURL
 		// dsn := "unix://user:pass@dbname/var/run/postgresql/.s.PGSQL.5432"
 		sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 		defer sqldb.Close()

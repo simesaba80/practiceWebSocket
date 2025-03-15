@@ -2,19 +2,14 @@ package main
 
 import (
 	"net/http"
+	"websocket/utils"
 
 	"github.com/labstack/echo/v4"
-	"github.com/uptrace/bun"
 )
 
-type User struct {
-	bun.BaseModel `bun:"table:users,alias:u"`
-
-	ID   int64 `bun:",pk,autoincrement"`
-	Name string
-}
-
 func main() {
+	utils.LoadConfig()
+	// db.Connect()
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "change files")
