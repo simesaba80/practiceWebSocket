@@ -3,7 +3,7 @@ services:
     container_name: app
     build:
       context: .
-      dockerfile: app1.dockerfile
+      dockerfile: ${DOCKERFILE_NAME:-dev.dockerfile}
     tty: true
     ports:
       - 8080:8080
@@ -14,7 +14,7 @@ services:
 
   db:
     container_name: db
-    build: 
+    build:
       context: .
       dockerfile: db.dockerfile
     ports:
@@ -22,7 +22,7 @@ services:
     volumes:
       - db-store:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: 'user'
-      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "postgres"
 volumes:
   db-store:
